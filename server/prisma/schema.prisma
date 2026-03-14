@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique          // Clerk se aata hai (e.g. "user_2xyz...")
+  username  String   @unique
+  email     String   @unique
+  name      String?
+  imageUrl  String?
+  bio       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts     Post[]
+  comments  Comment[]
+  likes     Like[]
+
+  // followers/following (optional — uncomment agar chahiye)
+  following Follow[] @relation("Following")
+  followers Follow[] @relation("Followers")
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────
+// POST
+// ─────────────────────────────────────────
+model Post {
+  id        String   @id @default(cuid())
+  content   String
+  imageUrl  String?
+  published Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  comments  Comment[]
+  likes     Like[]
+
+  @@map("posts")
+}
+
+// ─────────────────────────────────────────
+// COMMENT
+// ─────────────────────────────────────────
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  // Nested comments (optional — uncomment agar chahiye)
+  // parentId  String?
+  // parent    Comment?  @relation("Replies", fields: [parentId], references: [id])
+  // replies   Comment[] @relation("Replies")
+
+  @@map("comments")
+}
+
+// ─────────────────────────────────────────
+// LIKE
+// Post ya Comment dono pe like ho sake
+// ─────────────────────────────────────────
+model Like {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  postId    String?
+  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  // Ek user ek post pe sirf ek baar like kar sakta hai
+  @@unique([userId, postId])
+
+  @@map("likes")
+}
+
+// ─────────────────────────────────────────
+// FOLLOW (optional — uncomment agar chahiye)
+// ─────────────────────────────────────────
+model Follow {
+  id          String @id @default(cuid())
+  followerId  String
+  followingId String
+  follower    User   @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User   @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@unique([followerId, followingId])
+  @@map("follows")
+}

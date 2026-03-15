@@ -31,3 +31,9 @@ export type User = {
   email: string
   image?: string
 }
+
+
+export type PaginatedPosts = {
+  posts: Post[];
+  nextCursor?: string | null;
+};

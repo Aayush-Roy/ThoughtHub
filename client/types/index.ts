@@ -21,3 +21,13 @@ export interface Post {
   likes: number;
   commentsCount?: number;
 }
+
+
+
+
+export type User = {
+  id: string
+  username: string
+  email: string
+  image?: string
+}

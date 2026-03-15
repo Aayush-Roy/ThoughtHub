@@ -87,7 +87,7 @@ export function CommentSection({ postId, initialComments, currentDbUserId }: Com
                 <time className="text-xs font-mono text-[#444]">
                   {formatDistanceToNow(new Date(c.createdAt), { addSuffix: true })}
                 </time>
-                {currentDbUserId === c.authorId && (
+                {currentDbUserId === c.author.id && (
                   <button
                     onClick={() => handleDelete(c.id)}
                     className="text-xs text-[#333] hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 ml-auto"

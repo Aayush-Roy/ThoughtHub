@@ -156,7 +156,8 @@ export function PostCard({ post, currentDbUserId, hasLiked = false, onDelete }: 
   const [deleting, setDeleting] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
 
-  const isOwner = currentDbUserId === post.authorId;
+  const isOwner = currentDbUserId === post.author.id;
+  
 
   const handleLike = async () => {
     try {

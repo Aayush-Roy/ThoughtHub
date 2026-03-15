@@ -67,7 +67,7 @@ export function CommentSection({ postId, initialComments, currentDbUserId }: Com
           </div>
         </div>
       )}
-
+{/* {fuck vercel} */}
       {/* List */}
       <div className="space-y-4">
         {comments.map((c) => (

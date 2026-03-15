@@ -21,7 +21,11 @@ export default async function PostPage({ params }: Props) {
 
   if (!post) notFound();
 
-  const likedByMe = me ? post.likes?.some((l) => l.userId === me.id) ?? false : false;
+  // const likedByMe = me ? post.likes?.some((l) => l.userId === me.id) ?? false : false;
+  const likedByMe =
+  me && Array.isArray(post.likes)
+    ? post.likes.some((l) => l.userId === me.id)
+    : false;
 
   return (
     <div>

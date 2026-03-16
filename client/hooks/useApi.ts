@@ -3,7 +3,7 @@
 import { useAuth } from "@clerk/nextjs";
 import { useCallback } from "react";
 
-const BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+const BASE ="https://thoughthub-5t0m.onrender.com";
 
 export function useApi() {
   const { getToken } = useAuth();

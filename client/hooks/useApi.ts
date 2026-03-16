@@ -21,11 +21,15 @@ export function useApi() {
         },
       });
 
+      // if (!res.ok) {
+      //   const err = await res.json().catch(() => ({ message: "Request failed" }));
+      //   throw new Error(err.message || "Request failed");
+      // }
       if (!res.ok) {
-        const err = await res.json().catch(() => ({ message: "Request failed" }));
-        throw new Error(err.message || "Request failed");
-      }
-
+  const text = await res.text();
+  console.log("API ERROR:", res.status, text);
+  throw new Error(`API Error ${res.status}`);
+}
       return res.json();
     },
     [getToken]

@@ -3,7 +3,7 @@
 import { useAuth } from "@clerk/nextjs";
 import { useCallback } from "react";
 
-const BASE ="https://thoughthub-5t0m.onrender.com";
+const BASE ="https://thoughthub-5t0m.onrender.com/api";
 
 export function useApi() {
   const { getToken } = useAuth();
@@ -21,15 +21,11 @@ export function useApi() {
         },
       });
 
-      // if (!res.ok) {
-      //   const err = await res.json().catch(() => ({ message: "Request failed" }));
-      //   throw new Error(err.message || "Request failed");
-      // }
       if (!res.ok) {
-  const text = await res.text();
-  console.log("API ERROR:", res.status, text);
-  throw new Error(`API Error ${res.status}`);
-}
+        const err = await res.json().catch(() => ({ message: "Request failed" }));
+        throw new Error(err.message || "Request failed");
+      }
+     
       return res.json();
     },
     [getToken]

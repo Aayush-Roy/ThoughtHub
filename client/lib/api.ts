@@ -51,7 +51,7 @@
 
 import { auth } from "@clerk/nextjs/server";
 
-const BASE = "https://thoughthub-5t0m.onrender.com";
+const BASE = "https://thoughthub-5t0m.onrender.com/api";
 // fuck off
 
 // export async function serverFetch<T>(

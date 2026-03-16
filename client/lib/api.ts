@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 
-const BASE = process.env.NEXT_PUBLIC_API_URL || "https://thoughthub-5t0m.onrender.com";
-
+const BASE =  "https://thoughthub-5t0m.onrender.com";
+// process.env.NEXT_PUBLIC_API_URL ||
 // ─── Client-side fetch (browser mein use karo) ───
 export async function apiFetch<T>(
   path: string,
